@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.git/
+.gitignore
+.dockerignore
+Dockerfile.generator
+Dockerfile.reporter
+run.sh
+README.md
+data/
+local_data/
+.DS_Store
