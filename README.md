@@ -52,3 +52,26 @@
   10. report_server - запустить nginx на порту 8080
 
 Черепахин Михаил Павлович, УЦП251
+
+##Самостоятельное изучение
+
+### 1. Volume mount (-v)
+Флаг -v связывает локальную папку data/ с /data внутри контейнера.
+Всё, что контейнер пишет в /data, появляется на хосте.
+После удаления контейнера файлы остаются.
+Источник:(https://docs.docker.com/engine/storage/bind-mounts/)
+
+### 2. --entrypoint override
+CMD и ENTRYPOINT ведут себя по-разному при передаче аргументов через docker run.
+CMD заменяется, и inside_reporter работает без изменений.
+ENTRYPOINT не заменяется, а дополняется, и тогда
+команда ls ушла бы как аргумент в Python-скрипт.
+Решение: флаг --entrypoint ls полностью переопределяет ENTRYPOINT,
+и вместо python /generate.py выполняется ls -la /data.
+Источник:(https://docs.docker.com/reference/dockerfile/#cmd)
+
+### 3. index.html для nginx
+Nginx по умолчанию ищет index.html. Без него корень сайта возвращает 403.
+В report_server добавлено cp data/report.html data/index.html,
+чтобы отчёт открывался сразу при переходе по ссылке.
+Источник:(https://nginx.org/en/docs/http/ngx_http_index_module.html)
